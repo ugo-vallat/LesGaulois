@@ -6,6 +6,7 @@ public class Druide {
 	private int forcePotion = 1;
 	private int effetPotionMin;
 	private int effetPotionMax;
+	private Random rand  = new Random();
 
 
 	public Druide(String nom, int effetPotionMin, int effetPotionMax) {
@@ -30,7 +31,6 @@ public class Druide {
 	
 	public int preparerPotion() {
 		parler("Je vais aller préparer une petite potion...");
-		Random rand  = new Random();
 		forcePotion = effetPotionMin + rand.nextInt(effetPotionMax - effetPotionMin + 1);
 		if (forcePotion > 7) {
 			parler(" J'ai préparé une super potion de force " + forcePotion);
@@ -41,7 +41,7 @@ public class Druide {
 	}
 	
 	public void booster(Gaulois gaulois) {
-		if (gaulois.getNom() == "Obélix") {
+		if (gaulois.getNom() != null &&  gaulois.getNom().equals("Obélix")) {
 			parler(" Non, Obélix !... Tu n’auras pas de potion magique ! ");
 		} else {
 			gaulois.boirePotion(forcePotion);

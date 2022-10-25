@@ -9,7 +9,9 @@ public class Romain {
 	private int nbEquipement = 0;
 
 	public Romain(String nom, int force) {
-		assert force > 0 : "Erreur force : " + force;
+		if (force <= 0) {
+		throw new IllegalArgumentException( "Erreur force : " + force);
+		}
 		this.nom = nom;
 		this.force = force;
 		System.out.println(nom + " rejoind la partie !!\n");
