@@ -1,6 +1,5 @@
 package personnages;
 
-import javax.accessibility.AccessibleAttributeSequence;
 
 public class Romain {
 	private String nom;
@@ -9,6 +8,7 @@ public class Romain {
 	private int nbEquipement = 0;
 
 	public Romain(String nom, int force) {
+		super();
 		if (force <= 0) {
 		throw new IllegalArgumentException( "Erreur force : " + force);
 		}
@@ -26,7 +26,7 @@ public class Romain {
 	}
 
 	public void parler(String texte) {
-		System.out.println(prendreParole() + "« " + texte + "»\n");
+		System.out.println(prendreParole() + "ï¿½ " + texte + "ï¿½\n");
 	}
 
 	private String prendreParole() {
@@ -39,7 +39,7 @@ public class Romain {
 		force -= forceCoup;
 		assert var > force : "coup sans effet";
 		if (force > 0) {
-			parler("Aïe");
+			parler("Aï¿½e");
 		} else {
 			parler("J'abandonne...");
 		}
@@ -48,13 +48,13 @@ public class Romain {
 	public void sEquiper(Equipement equipement) {
 		switch (nbEquipement) {
 		case 2: {
-			System.out.println("Le soldat " + nom + " est déjà bien protégé !");
+			System.out.println("Le soldat " + nom + " est dï¿½jï¿½ bien protï¿½gï¿½ !");
 			break;
 		}
 		
 		case 1 : {
 			if (equipement == equipements[0]) {
-				System.out.println("Le soldat " + nom + " possède déjà un " + equipement.toString() + " !");
+				System.out.println("Le soldat " + nom + " possï¿½de dï¿½jï¿½ un " + equipement.toString() + " !");
 			} else {
 				ajouterEquipemet(equipement);
 			}
@@ -74,7 +74,7 @@ public class Romain {
 	private void ajouterEquipemet(Equipement equipement) {
 		equipements[nbEquipement] = equipement;
 		nbEquipement++;
-		System.out.println("Le soldat " + nom + " s’équipe avec un " + equipement.toString());
+		System.out.println("Le soldat " + nom + " sï¿½ï¿½quipe avec un " + equipement.toString());
 
 	}
 
