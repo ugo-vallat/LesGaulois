@@ -16,16 +16,16 @@ public class Musee {
 		return nom;
 	}
 	
-	public void donnerTrophees(Gaulois gaulois, Equipement equipement) {
-		if (nbTrophee >= tailleMusee) {
-			throw new IllegalArgumentException("Musee complet, trophee rejeté :" + equipement.getNom());
-		} else {
-			Trophee trophee = new Trophee(gaulois, equipement);
-			collection[nbTrophee] = trophee;
-			nbTrophee++;
-//			System.out.println(gaulois.getNom() + "vient d'ajouter le trophee " + equipement.getNom() + " au musee.\n");
-		}
-	}
+	public void donnerTrophees(Gaulois gaulois, Trophee trophee) {
+        if (nbTrophee >= 200) {
+            throw new IllegalArgumentException("Musee complet, trophee rejeté :" + trophee.getEquipement());
+        } else {
+            collection[nbTrophee] = trophee;
+            nbTrophee++;
+//            System.out.println(gaulois.getNom() + "vient d'ajouter le trophee " + equipement.getNom() + " au musee.\n");
+        }
+    }
+
 	
 	public String extraireInstructionsCaml() {
 		String texte = "let " + this.nom + " = [\n";

@@ -5,9 +5,9 @@ public class Gaulois {
 	private int force;
 	private int attaque = 2;
 	private int effetPotion;
-	private Equipement [] equipements;
-	private int nbEquipement = 0;
-	private int nbEquipementMax;
+	private Equipement [] trophees;
+	private int nbTrophees = 0;
+	private int nbEquipementMax = 100;
 	
 	public Gaulois(String nom, int force, int nbEquipementMax) {
 		super();
@@ -17,7 +17,7 @@ public class Gaulois {
 		this.nom = nom;
 		this.force = force;
 		this.nbEquipementMax = nbEquipementMax;
-		this.equipements = new Equipement[nbEquipementMax];
+		this.trophees = new Equipement[nbTrophees];
 		System.out.println(nom + " rejoind la partie !!\n");
 	}
 
@@ -44,49 +44,57 @@ public class Gaulois {
 		return("Le gaulois " + nom + " : ");
 	}
 	
-	public void frapper(Romain romain) {
-		System.out.println("Le Gaulois " + nom + " chatouille le romain " + romain.getNom() + " et lui infflige " + getAttaque() 
-				+ " points de dommages (RIP l'amitie)\n");
-		romain.recevoirCoup(getAttaque());
-	}
+//	public void frapper(Romain romain) {
+//		System.out.println("Le Gaulois " + nom + " chatouille le romain " + romain.getNom() + " et lui infflige " + getAttaque() 
+//				+ " points de dommages (RIP l'amitie)\n");
+//		romain.recevoirCoup(getAttaque());
+//	}
 	
+	public void frapper(Romain romain) {
+        System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
+        Equipement[] nouveauTrophees = romain.recevoirCoup((force / 3) * effetPotion);
+        for (int i = 0; nouveauTrophees != null && i < nouveauTrophees.length; i++,nbTrophees++) {
+            trophees[nbTrophees] = nouveauTrophees[i];
+        }
+    }
 	public void boirePotion(int forcePotion) {
 		effetPotion = forcePotion;
 		parler("Merci Druide, je sens que mon attaque est "+ effetPotion + " fois d�cupl�e.");
 
 	}
 	
-	public void sEquiper(Equipement equipement) {
-		if (nbEquipement == nbEquipementMax) {
-			System.out.println("Le soldat " + nom + " est deja bien protege !");
-		}else {
-			int i = 0;
-			while (i < nbEquipement && i != -1) {
-				if (equipements[i] == equipement) { i = -1;} else {i++;}
-			}
-			if (i == -1) {
-				System.out.println("Le soldat " + nom + " possede deja un " + equipement.toString() + " !");
-				} else {
-					equipements[nbEquipement] = equipement;
-					nbEquipement++;
-					System.out.println("Le soldat " + nom + " s equipe avec un " + equipement.toString());
-}
-		}
-	}
+//	public void sEquiper(Equipement equipement) {
+//		if (nbEquipement == nbEquipementMax) {
+//			System.out.println("Le soldat " + nom + " est deja bien protege !");
+//		}else {
+//			int i = 0;
+//			while (i < nbEquipement && i != -1) {
+//				if (equipements[i] == equipement) { i = -1;} else {i++;}
+//			}
+//			if (i == -1) {
+//				System.out.println("Le soldat " + nom + " possede deja un " + equipement.toString() + " !");
+//				} else {
+//					equipements[nbEquipement] = equipement;
+//					nbEquipement++;
+//					System.out.println("Le soldat " + nom + " s equipe avec un " + equipement.toString());
+//			}
+//		}
+//	}
 	
 	
 	public void faireUneDonnation(Musee musee) {
-		if (nbEquipement == 0) {
-			System.out.println(this.nom + "n'a pas d'équipement à donner ");
-		} else {
-			System.out.println("Le gaulois " + this.nom +" : « Je donne au musee tous mes trophees :");
-			while(nbEquipement > 0) {
-				System.out.println("  - " + equipements[nbEquipement - 1].getNom());
-				musee.donnerTrophees(this, equipements[nbEquipement - 1]);
-				nbEquipement--;
-			}
-		}
-	}
+        if (nbTrophees == 0) {
+            System.out.println(this.nom + "n'a pas d'équipement à donner ");
+        } else {
+            System.out.println("Le gaulois " + this.nom +" : « Je donne au musee tous mes trophees :");
+            while(nbTrophees > 0) {
+                System.out.println("  - " + trophees[nbTrophees - 1].getNom());
+                Trophee trophee = new Trophee(this, trophees[nbTrophees - 1]);
+                musee.donnerTrophees(this, trophee);
+                nbTrophees--;
+            }
+        }
+    }
 
 	@Override
 	public String toString() {
@@ -109,10 +117,6 @@ public class Gaulois {
 		Equipement casque = Equipement.CASQUE;
 		Equipement bouclier = Equipement.BOUCLIER;
 		Equipement epee = Equipement.EPEE;
-		
-		asterix.sEquiper(bouclier);
-		asterix.sEquiper(casque);
-		asterix.sEquiper(epee);
 		
 		asterix.faireUneDonnation(louvre);
 		System.out.println(louvre.extraireInstructionsCaml());
